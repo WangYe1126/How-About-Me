@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.forumMapper">
+    <sql id="selectFields">
+        F_No,U_No,UI_name,UI_Purl,F_Good,F_Text,F_Time,F_Photo1,F_Photo2,F_Photo3,F_Photo4,F_Photo5,F_Photo6,F_Photo7,F_Photo8,F_Photo9,
+    </sql>
+
+    <select id="selectForum" resultType="forum">
+        SELECT <include refid="selectFields"></include>
+        FROM forum,user
+        WHERE forum.U_No=user.U_No
+        ORDER BY F_Time DESC
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="selectForumRows" resultType="int">
+        SELECT COUNT(F_No)
+        FROM forum
+    </select>
+</mapper>

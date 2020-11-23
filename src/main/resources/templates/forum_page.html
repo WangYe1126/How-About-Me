@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>线下活动</title>
+    <link rel="icon" type="image/png" th:href="@{/assets/img/favicon.ico}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, testUser-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <!-- Bootstrap core CSS     -->
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+    <!-- Animation library for notifications   -->
+    <link th:href="@{/assets/css/animate.min.css}" rel="stylesheet"/>
+    <!--  Light Bootstrap Table core CSS    -->
+    <link th:href="@{/assets/css/light-bootstrap-dashboard.css(v=1.4.0)}" rel="stylesheet"/>
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link th:href="@{/assets/css/pe-icon-7-stroke.css}" rel="stylesheet" />
+    <style type="text/css">
+        .back_to_top{width: 50px;height: 50px;border: mediumpurple;background: mediumpurple;text-align: center;padding-top:15px;color: white}
+        .post_text{
+            color: black;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="modal fade" id="warningOp" tabindex="-1" role="dialog" aria-labelledby="warningOpLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="warningOpLabel">Attention</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                请注意当前操作！
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary btn-sm">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="post_add" tabindex="-1" role="dialog" aria-labelledby="activity_addLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="activity_addLabel">发布帖子</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <form>
+                                <div class="form-group">
+                                    <label for="postTitle">标题</label>
+                                    <input type="text" class="form-control" id="postTitle" placeholder="Title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="postContent">内容</label>
+                                    <textarea rows="3" class="form-control" id="postContent" placeholder="Content"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="postImg">选择图片</label>
+                                    <input type="file" id="postImg">
+                                    <p class="help-block">所选图片请不要超过20M</p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm btn-fill" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary btn-sm btn-fill">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="sidebar" data-color="purple">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="#" class="simple-text">
+                    How About We
+                </a>
+            </div>
+
+            <ul class="nav">
+                <li>
+                    <a href="admin_activity.html">
+                        <i class="pe-7s-note2"></i>
+                        <p>活动管理</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin_users.html">
+                        <i class="pe-7s-testUser"></i>
+                        <p>用户管理</p>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="admin_forum.html">
+                        <i class="pe-7s-science"></i>
+                        <p>论坛管理</p>
+                    </a>
+                </li>
+
+                <li class="active-pro">
+                    <a href="profile_list.html">
+                        <i class="pe-7s-testUser"></i>
+                        <p>管理员资料</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="main-panel">
+        <nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">管理内容</a>
+                </div>
+                <div class="collapse navbar-collapse">
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <p>
+                                    MENU
+                                    <b class="caret"></b>
+                                </p>
+
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" class="bg-info">论坛管理</a></li>
+                                <li class="divider"></li>
+                                <li><a  data-toggle="modal" data-target="#post_add">发布帖子</a></li>
+                                <li><a href="#post_view">查看帖子</a></li>
+                                <li><a href="#post_sta">统计分析</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="profile_list.html">
+                                <p>桂鹏辉&nbsp; <span class="notification hidden-sm hidden-xs">6</span></p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="login.html">
+                                <p><i class="fa fa-power-off"></i> 退出系统</p>
+                            </a>
+                        </li>
+                        <li class="separator hidden-lg"></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row" id="post_view">
+                    <ul class="list-unstyled">
+                        <li class="media pb-3 pt-3 mb-3 border-bottom" th:each="map:${forumList}">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="content">
+                                        <i class="fa fa-circle text-danger"></i>火爆话题
+                                        <p class="category" th:utext="${map.post.U_Name}">发布人：桂鹏辉 | 点赞数：<span class="text-danger" th:utext="${map.post.F_Good}"> 258999</span><span th:text="${#dates.format(map.post.F_Time)}"></span> </p>
+                                        <a href="forum_list.html" class="post_text" th:utext="${map.post.F_Text}"><h4>一段幸福的婚姻需要什么什么什么什么什么什么是什么什么事</h4></a>
+                                        <div style="padding-left: 60px;">
+                                            <ul class="list-inline">
+                                                <li><img src="assets/img/faces/face-2.jpg" class="img-responsive img-rounded float-left"></li>
+                                                <li><img src="assets/img/faces/face-2.jpg" class="img-responsive img-rounded float-left"></li>
+                                                <li><img src="assets/img/faces/face-2.jpg" class="img-responsive img-rounded float-left"></li>
+                                                <li><img src="assets/img/faces/face-2.jpg" class="img-responsive img-rounded float-left"></li>
+                                            </ul>
+                                        </div>
+                                        <div class="footer">
+
+                                            <hr>
+                                            <div class="stats">
+                                                <i class="fa fa-history"></i> Updated 3 minutes ago
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="row" id="post_sta">
+                    <div class="col-md-12">
+                        <div id="main" style="width: 900px;height:500px;"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                <p class="copyright pull-right">
+                    &copy; <script>document.write(new Date().getFullYear())</script> <a href="#">How About we</a>, made with love for a better match-making websites
+                </p>
+            </div>
+        </footer>
+    </div>
+
+</div>
+<div style="overflow: hidden;position: fixed;right: 80px;bottom: 80px;z-index: 10;">
+    <div style="overflow: hidden;">
+        <div style="">
+            <a href="#" style="float: right;" class="back_to_top"><i class="fa fa-chevron-up"></i></a>
+        </div>
+    </div>
+</div>
+
+</body>
+<!--   Core JS Files   -->
+<script th:src="@{/assets/js/jquery.3.2.1.min.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}" type="text/javascript"></script>
+<!--  Charts Plugin -->
+<script th:src="@{/assets/js/chartist.min.js}"></script>
+<!--  Notifications Plugin    -->
+<script th:src="@{/assets/js/bootstrap-notify.js}"></script>
+<!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+<script th:src="@{assets/js/light-bootstrap-dashboard.js(v=1.4.0)}"></script>
+
+<script src="https://cdn.bootcss.com/echarts/4.1.0.rc2/echarts-en.js"></script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    // 指定图表的配置项和数据
+    var base = +new Date(1968, 9, 3);
+    var oneDay = 24 * 3600 * 1000;
+    var date = [];
+
+    var data = [Math.random() * 300];
+
+    for (var i = 1; i < 20000; i++) {
+        var now = new Date(base += oneDay);
+        date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
+        data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
+    }
+
+    option = {
+        tooltip: {
+            trigger: 'axis',
+            position: function (pt) {
+                return [pt[0], '10%'];
+            }
+        },
+        title: {
+            left: 'center',
+            text: '莫名其妙统计图',
+        },
+        toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: date
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%']
+        },
+        dataZoom: [{
+            type: 'inside',
+            start: 0,
+            end: 10
+        }, {
+            start: 0,
+            end: 10,
+            handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+            handleSize: '80%',
+            handleStyle: {
+                color: '#fff',
+                shadowBlur: 3,
+                shadowColor: 'rgba(0, 0, 0, 0.6)',
+                shadowOffsetX: 2,
+                shadowOffsetY: 2
+            }
+        }],
+        series: [
+            {
+                name:'模拟数据',
+                type:'line',
+                smooth:true,
+                symbol: 'none',
+                sampling: 'average',
+                itemStyle: {
+                    normal: {
+                        color: 'rgb(255, 70, 131)'
+                    }
+                },
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgb(255, 158, 68)'
+                        }, {
+                            offset: 1,
+                            color: 'rgb(255, 70, 131)'
+                        }])
+                    }
+                },
+                data: data
+            }
+        ]
+    };
+
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+
+
+</html>
